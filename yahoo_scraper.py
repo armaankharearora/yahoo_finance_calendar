@@ -9,6 +9,7 @@ st.title("Yahoo Finance Date Scraper﻿")
 d = st.date_input(
     "Enter Date Here")
 
+
 @st.cache_data
 def convert_df(df):
     return df.to_csv(index=False).encode('utf-8')   
@@ -45,6 +46,7 @@ def scrape_yahoo_finance(date):
     return df
 
 if st.button('Scrape'):
+    date_file = d.strftime('%Y_%m_%d')
     df = scrape_yahoo_finance(d)
     st.table(df)
     csv = convert_df(df)
@@ -52,7 +54,7 @@ if st.button('Scrape'):
     st.download_button(
     "Press to Download",
     csv,
-    "file.csv",
+    "yahoo_earnings" + date_file + ".csv",
     "text/csv",
     key='download-csv'
     )
