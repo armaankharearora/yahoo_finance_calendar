@@ -48,14 +48,19 @@ def scrape_yahoo_finance(date):
 if st.button('Scrape'):
     date_file = d.strftime('%Y_%m_%d')
     df = scrape_yahoo_finance(d)
-    st.table(df)
-    csv = convert_df(df)
+    if df is not None:
+        csv = convert_df(df)
+        st.download_button(
+        "Press to Download",
+        csv,
+        "yahoo_earnings" + date_file + ".csv",
+        "text/csv",
+        key='download-csv'
+        )
+        st.table(df)
+    else:
+        st.write('There is no data for this date')
 
-    st.download_button(
-    "Press to Download",
-    csv,
-    "yahoo_earnings" + date_file + ".csv",
-    "text/csv",
-    key='download-csv'
-    )
+
+       
 
